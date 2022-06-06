@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const POSTS_URL = 'https://jsonplaceholder.typicode.com/posts'
@@ -31,6 +31,25 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
 export const addNewPost = createAsyncThunk('posts/addNewPost', async (initialPost: PostType) => {
   const response = await axios.post(POSTS_URL, initialPost)
   return response.data
+})
+
+export const deletePost = createAsyncThunk('posts/deletePost', async (id: number) => {
+  try {
+    const response = await axios.delete(`${POSTS_URL}/${id}`)
+    if (response?.status === 200) return id
+  } catch (err: any) {
+    return err.message
+  }
+})
+
+export const updatePost = createAsyncThunk('posts/updatePost', async (initialPost: PostType) => {
+  const { id } = initialPost
+  try {
+    const response = await axios.put(`${POSTS_URL}/${id}`, initialPost)
+    return response.data
+  } catch (err) {
+    return initialPost // only for testing Redux!
+  }
 })
 
 const postsSlice = createSlice({
@@ -70,6 +89,25 @@ const postsSlice = createSlice({
           coffee: 0,
         }
         state.posts.push(action.payload)
+      })
+      .addCase(updatePost.fulfilled, (state, action) => {
+        if (!action.payload?.id) {
+          console.log('Update could not complete')
+          console.log(action.payload)
+          return
+        }
+        const { id } = action.payload
+        const posts = state.posts.filter((post) => post.id !== id)
+        state.posts = [...posts, action.payload]
+      })
+      .addCase(deletePost.fulfilled, (state, action: PayloadAction<number>) => {
+        if (!action.payload) {
+          console.log('Delete could not complete')
+          console.log(action.payload)
+          return
+        }
+        const posts = state.posts.filter((post) => post.id !== action.payload)
+        state.posts = posts
       })
   },
 })

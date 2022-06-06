@@ -36,7 +36,7 @@ const Posts = (): JSX.Element => {
         onClick={() =>
           dispatch(
             addNewPost({
-              id: 3304,
+              id: 101,
               title: 'Title of the new Post',
               body: 'Body of the new Post',
               userId: 123,
@@ -44,7 +44,7 @@ const Posts = (): JSX.Element => {
           )
         }
       >
-        +
+        add static Post with id 101
       </button>
     </div>
   )
