@@ -1,3 +1,5 @@
-const Posts = (): JSX.Element => <h1>Posts</h1>;
+import Posts from 'features/axios/posts/Posts'
 
-export default Posts;
+const PostsPage = (): JSX.Element => <Posts />
+
+export default PostsPage
