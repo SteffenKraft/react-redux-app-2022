@@ -1,6 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { PostType, deletePost, updatePost } from './postsSlice'
-import { useAppDispatch, useAppSelector } from '../../../app/hooks'
+import { useAppDispatch } from '../../../app/hooks'
 
 const Post = ({ post }: { post: PostType }): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -10,6 +11,7 @@ const Post = ({ post }: { post: PostType }): JSX.Element => {
         Post title: {post.title} <br />
         Post id {post.id} <br />
         Post body {post.body} <br />
+        <Link to={`/posts/${post.id}`}>Link to Post</Link>
         <button onClick={() => dispatch(deletePost(post.id))}>delete</button>
         <button
           onClick={() =>
