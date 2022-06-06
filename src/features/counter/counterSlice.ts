@@ -1,19 +1,19 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import * as CounterApi from "./counterApi";
-import type { RootState } from "../../app/store";
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import * as CounterApi from './counterApi';
+import type { RootState } from '../../app/store';
 
 interface CounterState {
   value: number;
-  status: "idle" | "loading" | "failed";
+  status: 'idle' | 'loading' | 'failed';
 }
 
 const initialState: CounterState = {
-  status: "idle",
+  status: 'idle',
   value: 0,
 };
 
 export const incrementAsync = createAsyncThunk(
-  "counter/fetchCount",
+  'counter/fetchCount',
   async (amount: number) => {
     const response = await CounterApi.fetchCount(amount);
     // The value we return becomes the `fulfilled` action payload
@@ -22,7 +22,7 @@ export const incrementAsync = createAsyncThunk(
 );
 
 export const counterSlice = createSlice({
-  name: "counter",
+  name: 'counter',
   initialState,
   reducers: {
     increment: (state) => {
@@ -43,14 +43,14 @@ export const counterSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(incrementAsync.pending, (state) => {
-        state.status = "loading";
+        state.status = 'loading';
       })
       .addCase(incrementAsync.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = 'idle';
         state.value += action.payload;
       })
       .addCase(incrementAsync.rejected, (state) => {
-        state.status = "failed";
+        state.status = 'failed';
       });
   },
 });

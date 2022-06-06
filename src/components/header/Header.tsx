@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import * as Styled from "./Header.styled";
+import { Link } from 'react-router-dom';
+import * as Styled from './Header.styled';
 
 const Header = (): JSX.Element => (
   <Styled.Header>
