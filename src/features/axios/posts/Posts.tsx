@@ -7,6 +7,7 @@ import {
   selectAllPosts,
   fetchPosts,
   PostType,
+  addNewPost,
 } from './postsSlice'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 
@@ -28,12 +29,23 @@ const Posts = (): JSX.Element => {
   } else if (postsStatus === 'failed') {
     content = <p>{postsError}</p>
   }
-
   return (
     <div>
-      {' '}
-      <button onClick={() => dispatch(fetchPosts())}>+</button>
       {content}
+      <button
+        onClick={() =>
+          dispatch(
+            addNewPost({
+              id: 3304,
+              title: 'Title of the new Post',
+              body: 'Body of the new Post',
+              userId: 123,
+            }),
+          )
+        }
+      >
+        +
+      </button>
     </div>
   )
 }

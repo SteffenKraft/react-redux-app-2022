@@ -5,7 +5,7 @@ const Post = ({ post }: { post: PostType }): JSX.Element => {
   return (
     <div>
       <p>
-        {post.title} {post.user_id}
+        {post.title} {post.userId}
       </p>
       <p>{post.body}</p>
     </div>

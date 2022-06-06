@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-const POSTS_URL = 'https://gorest.co.in/public/v2/posts'
+const POSTS_URL = 'https://jsonplaceholder.typicode.com/posts'
 
 export type PostType = {
   id: number
-  user_id: number
+  userId: number
   title: string
   body: string
   reactions?: { thumbsUp: number; wow: number; heart: number; rocket: number; coffee: number }
@@ -25,6 +25,11 @@ const initialState: SliceState = {
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   const response = await axios.get(POSTS_URL)
+  return response.data
+})
+
+export const addNewPost = createAsyncThunk('posts/addNewPost', async (initialPost: PostType) => {
+  const response = await axios.post(POSTS_URL, initialPost)
   return response.data
 })
 
@@ -55,6 +60,16 @@ const postsSlice = createSlice({
       .addCase(fetchPosts.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
+      })
+      .addCase(addNewPost.fulfilled, (state, action) => {
+        action.payload.reactions = {
+          thumbsUp: 0,
+          wow: 0,
+          heart: 0,
+          rocket: 0,
+          coffee: 0,
+        }
+        state.posts.push(action.payload)
       })
   },
 })
