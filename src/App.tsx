@@ -2,14 +2,14 @@ import Home from 'pages/home/Home'
 import Layout from 'pages/layout/Layout'
 import Posts from 'pages/posts/Posts'
 import Post from 'pages/posts/Post'
-import Todos from 'pages/todos/Todos'
+import TodosPage from 'pages/todos/TodosPage'
 import { Routes, Route, Navigate } from 'react-router-dom'
 
 const App = (): JSX.Element => (
   <Routes>
     <Route element={<Layout />}>
       <Route path='/' element={<Home />} />
-      <Route path='todos' element={<Todos />} />
+      <Route path='todos' element={<TodosPage />} />
       <Route path='posts'>
         <Route index element={<Posts />} />
         <Route path=':postId' element={<Post />} />
