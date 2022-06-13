@@ -4,7 +4,7 @@ import Todo from './Todo'
 
 const Todos = (): JSX.Element => {
   const { data: todos, isLoading: isLoadingTodos } = useGetTodosQuery()
-  const [addNewTodo, { isLoading: isLoadingAddNewTodo }] = useAddNewTodoMutation()
+  const [addNewTodo] = useAddNewTodoMutation()
 
   if (isLoadingTodos) {
     return <div>Loading</div>
@@ -26,7 +26,9 @@ const Todos = (): JSX.Element => {
       >
         Add Todo
       </button>
-      {todos && todos.map((todo) => <Todo key={todo.id} todo={todo} />)}
+      {todos.map((todo) => (
+        <Todo key={todo.id} todo={todo} />
+      ))}
     </div>
   )
 }
